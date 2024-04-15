@@ -5,6 +5,7 @@ import MainPage from './MainPage';
 import Chat from './Chat';
 import EachChat from './EachChat';
 import Login from './Login';
+import Speech from './Speech';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ export default function App() {
         options={({route})=>({
           title : route.params.name,
           })}></Stack.Screen>
+          <Stack.Screen name="DontUse" component={Speech}></Stack.Screen>
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,19 +2,19 @@ import auth from '@react-native-firebase/auth';
 // import {auth} from './FirebaseSetup';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import * as tf from '@tensorflow/tfjs'
-import * as use from '@tensorflow-models/universal-sentence-encoder';
 const phrases = require('./SimilarPhrases.json');
- 
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import Styles from './Styles';
+import { View, Text, TextInput, Button, StyleSheet , Modal, Touchable} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchEventType } from 'react-native-gesture-handler/lib/typescript/TouchEventType';
 export default function Login ({navigation}){
   // converter.js
-
+  const style = Styles;
   const login = phrases.login;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [initializing, setInitializing] = useState(true);
-
+  const [sKey, setSKey] = useState(true);
   const [user, setUser]= useState('');
   function onAuthStateChanged(user) {
     setUser(user);
@@ -22,63 +22,43 @@ export default function Login ({navigation}){
   }
 
   useEffect(() => {
-    const convert = async () => {
-      // Load the Universal Sentence Encoder model
-      try {
-        // await tf.ready();
-        console.log('line 30')
-        use.loadTokenizer().then(tokenizer => {
-          console.log("owejvn efjnv")
-          tokenizer.encode('Hello, how are you?');
-          console.log(tokenizer) // [341, 4125, 8, 140, 31, 19, 54]
-        });
-        await tf.loadLayersModel(bundle)
-        use.load().then(model => {
-          console.log(model)
-          // Embed an array of sentences.
-          const sentences = [
-            'Hello.',
-            'How are you?'
-          ];
-          model.embed(sentences).then(embeddings => {
-            console.log("hiii")
-            console.log(embeddings.data)
-            // `embeddings` is a 2D tensor consisting of the 512-dimensional embeddings for each sentence.
-            // So in this example `embeddings` has the shape [2, 512].
-            embeddings.print(true /* verbose */);
-          }).catch(err=>console.log(err));
-        }).catch(err=>console.log(err));
-      console.log('line 32')
-
-      // console.log(login)
-      // Embed the login phrase
-      // const embedIt = await model.embed(login);
-      // console.log("embed it", embedIt)
-      // // Embed the user input phrase
-      // const userinputEmb = await model.embed("Log me in");
-      
-      // // Slice the first embedding (assuming you want the first one)
-      // const embedIt1 = embedIt.slice([0, 0], [1]);
-      
-      // // Compute the similarity score
-      // const score = await embedIt1.matMul(userinputEmb, false, true).data();
-      // console.log("score", score)
-      }
-      catch(error)
-    {
-      console.log(error)
-    }    
-        // Return the score if you want to use it elsewhere
-    }
-    convert();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    
-      return subscriber; // unsubscribe on unmount
+    return subscriber; // unsubscribe on unmount
   }, []);
   
+  const SecretKey = () => {
+    return (
+      <Modal
+      animationType='slide'
+      visible={sKey}
+      onRequestClose={() => setSKey(false)}
+      >
+        <View  style = {{backgroundColor:'#87CDEE',
+          alignItems:"center",
+          width:"100%", 
+          height:"100%",
+        }}
+          >
+            <Text style={{top:"40%", fontSize:30}}>Wanna set passkey?</Text>
+            <View style={{top:"90%", alignItems:"center", flexDirection:"row"}}>
+            <Text style ={{backgroundColor:"#90EE90",
+            borderRadius:10,
+            padding:"10%",
+            marginRight:"5%",
+              textAlign:"center"}}>Say Yes!</Text>
+          
+            <Text style ={{backgroundColor:"#FF7F7F",
+            borderRadius:10,
+            padding:"10%",
+            marginLeft:"5%",textAlign:"center"}}>Say No!</Text>
+          </View>
+        </View>
+      </Modal>
+    )
+  }
 
   if (initializing) return null
-console.log('rendered login', email)
+  console.log('rendered login', email)
   const handleLogin = () => {
     // You can implement your login logic here
     console.log('Email:', email);
@@ -94,6 +74,7 @@ console.log('rendered login', email)
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>LOGIN</Text>
+      <SecretKey/>
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}

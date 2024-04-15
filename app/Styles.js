@@ -6,24 +6,23 @@ const footerPos = height - 375;
 const Styles = StyleSheet.create({
   screen: {
     backgroundColor:'#87CDEE',
+    height:"100%"
   },
     headerContainer: {
       flex:1,
       backgroundColor: '#ffe',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 40,
-      marginLeft:'auto',
-      marginRight:'auto',
+      marginVertical: "20%",
+      marginHorizontal:"20%",
       padding:'2%',
-      borderRadius:'20%'
+      position:"absolute"
     },
     headerContainer1: {
       flex:1,
       backgroundColor: '#ffe',
       padding:'1%',
       borderRadius:'20%',
-      margin:10,
     },
     headerContainer2: {
       flex:1,
@@ -48,7 +47,6 @@ const Styles = StyleSheet.create({
     },
     headerFont: {
       fontSize:40,
-      fontWeight:"900"
     },
     button: {
       backgroundColor:'black',
