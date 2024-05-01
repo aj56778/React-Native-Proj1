@@ -42,9 +42,6 @@ export default function EachChat({route}) {
             })
         })
         .catch((err)=>console.log(err))
-
-        
-        
         console.log("After",images)
     }
     useEffect(() => {

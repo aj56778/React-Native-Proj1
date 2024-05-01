@@ -6,10 +6,13 @@ import Chat from './Chat';
 import EachChat from './EachChat';
 import Login from './Login';
 import Speech from './Speech';
+import { Provider } from 'react-redux';
+import store from '../store/store';
 
 export default function App() {
   const Stack = createStackNavigator();
   return (
+    <Provider store = {store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home"
       screenOptions={{
@@ -32,5 +35,6 @@ export default function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   )
 }

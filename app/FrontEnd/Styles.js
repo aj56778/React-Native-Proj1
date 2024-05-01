@@ -22,7 +22,9 @@ const Styles = StyleSheet.create({
       flex:1,
       backgroundColor: '#ffe',
       padding:'1%',
-      borderRadius:'20%',
+      borderRadius:20,
+      borderColor: "black",
+      borderWidth: 2
     },
     headerContainer2: {
       flex:1,
